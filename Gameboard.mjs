@@ -6,6 +6,7 @@ export class Gameboard {
         this.populateBoard();
         this.shipCoords = [];
         this.hitCoords = [];
+        this.sunkShips = [];
         this.initializeAllShip();
     }
 
@@ -93,6 +94,25 @@ export class Gameboard {
         setShips(result);
     }
 
+    receiveAttack(coords) {
+        // Add coords to hitCoords
+        this.hitCoords.push(coords);
+
+        // Get the coords
+        const [X, Y] = coords.split(",");
+
+        // Go into the ship and add to the hit counter
+        if (this.board[X][Y] !== null) {
+            const ship = this.board[X][Y];
+            ship.hit();
+
+            // Check if sunk. If it is, add to the sunkShips
+            if (ship.isSunk()) {
+                this.sunkShips.push(ship);
+            }
+        }
+    }
+
     printBoard() {
         gb.board.map((arr) => {
             let result = "";
@@ -107,4 +127,4 @@ export class Gameboard {
 
 const gb = new Gameboard();
 // console.log(gb.shipCoords);
-gb.printBoard();
+// gb.printBoard();
