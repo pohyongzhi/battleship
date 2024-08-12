@@ -113,18 +113,7 @@ export class Gameboard {
         }
     }
 
-    printBoard() {
-        gb.board.map((arr) => {
-            let result = "";
-            arr.map((temp) => {
-                result += temp;
-            });
-
-            console.log(result);
-        });
+    isAllShipsSunk() {
+        return this.sunkShips.length === 5 ? true : false;
     }
 }
-
-const gb = new Gameboard();
-// console.log(gb.shipCoords);
-// gb.printBoard();

@@ -31,3 +31,20 @@ test("Check sunk ships", () => {
     gameboard.receiveAttack("0,0");
     expect(gameboard.sunkShips[0].isSunk()).toBe(true);
 });
+
+test("Test all ships sunk", () => {
+    const gameboard = new Gameboard();
+    const ship1 = new Ship(1);
+    const ship2 = new Ship(2);
+    const ship3 = new Ship(2);
+    const ship4 = new Ship(3);
+    const ship5 = new Ship(4);
+
+    gameboard.sunkShips.push(ship1);
+    gameboard.sunkShips.push(ship2);
+    gameboard.sunkShips.push(ship3);
+    gameboard.sunkShips.push(ship4);
+    gameboard.sunkShips.push(ship5);
+
+    expect(gameboard.isAllShipsSunk()).toBe(true);
+});
