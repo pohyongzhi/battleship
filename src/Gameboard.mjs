@@ -64,7 +64,8 @@ export class Gameboard {
 
         const isValidPosition = (resultArr) => {
             for (let i = 0; i < resultArr.length; i++) {
-                if (this.shipCoords.includes(resultArr[i])) {
+                const stringResult = JSON.stringify(resultArr[i]);
+                if (this.shipCoords.includes(stringResult)) {
                     return false;
                 }
             }

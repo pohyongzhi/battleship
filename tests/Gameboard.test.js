@@ -1,6 +1,6 @@
 import { test, expect } from "@jest/globals";
-import { Gameboard } from "./Gameboard.mjs";
-import { Ship } from "./Ship.mjs";
+import { Gameboard } from "../src/Gameboard.mjs";
+import { Ship } from "../src/Ship.mjs";
 
 test("Receive attack test", () => {
     const gameboard = new Gameboard();
