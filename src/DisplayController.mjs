@@ -34,6 +34,11 @@ export class DisplayController {
 
                 const XY = x + "," + y;
 
+                // WRONG WAY OF WRITING CODE
+                if (playerBoard.hitCoords.includes(XY)) {
+                    tempCol.style.backgroundColor = "#2c7da0";
+                }
+
                 for (let i = 0; i < playerBoard.shipCoords.length; i++) {
                     if (
                         playerBoard.shipCoords[i].includes(XY) &&
@@ -42,8 +47,6 @@ export class DisplayController {
                         tempCol.style.backgroundColor = "#e63946";
                     } else if (playerBoard.shipCoords[i].includes(XY)) {
                         tempCol.style.backgroundColor = "#4ecca3";
-                    } else if (playerBoard.hitCoords.includes(XY)) {
-                        tempCol.style.backgroundColor = "#2c7da0";
                     }
                 }
 
