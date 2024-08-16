@@ -8,15 +8,6 @@ export class DisplayController {
         this.displayCpuBoard(cpuBoard);
     }
 
-    // --primary-color: #1a1a2e;
-    // --secondary-color: #16213e;
-    // --accent-color: #0f3460;
-    // --text-color: #e94560;
-    // --light-color: #f1f1f1;
-    // --ship-color: #4ecca3;
-    // --water-color: #2c7da0;
-    // --hit-color: #e63946;
-
     displayPlayerBoard(playerBoard) {
         const playerBoardContent = document.querySelector(
             ".player-board-content"
@@ -72,32 +63,47 @@ export class DisplayController {
                 tempRow.appendChild(tempCol);
 
                 tempCol.addEventListener("click", () => {
+                    function executeAttack(
+                        playerBoard,
+                        cpuBoard,
+                        displayPlayerBoard
+                    ) {
+                        // Add to hit position
+                        cpuBoard.receiveAttack(position);
+
+                        // Check if hit
+                        if (isHit(cpuBoard, position)) {
+                            tempCol.style.backgroundColor = "#e63946";
+                        } else {
+                            tempCol.style.backgroundColor = "#2c7da0";
+                        }
+
+                        // Check player win condition
+                        if (cpuBoard.isAllShipsSunk()) {
+                            console.log("you win");
+                        }
+
+                        // Randomize attacks
+                        cpuAttack(playerBoard);
+
+                        // Re-display
+                        displayPlayerBoard(playerBoard);
+
+                        // Check cpu win condition
+                        if (playerBoard.isAllShipsSunk()) {
+                            console.log("You lose");
+                        }
+                    }
+
                     const position = x + "," + y;
 
-                    // Add to hit position
-                    cpuBoard.receiveAttack(position);
-
-                    // Check if hit
-                    if (isHit(cpuBoard, position)) {
-                        tempCol.style.backgroundColor = "#e63946";
-                    } else {
-                        tempCol.style.backgroundColor = "#2c7da0";
-                    }
-
-                    // Check player win condition
-                    if (cpuBoard.isAllShipsSunk()) {
-                        console.log("you win");
-                    }
-
-                    // Randomize attacks
-                    cpuAttack(this.playerBoard);
-
-                    // Re-display
-                    this.displayPlayerBoard(this.playerBoard);
-
-                    // Check cpu win condition
-                    if (this.playerBoard.isAllShipsSunk()) {
-                        console.log("You lose");
+                    // Check if hitCoords already exists
+                    if (!cpuBoard.hitCoords.includes(position)) {
+                        executeAttack(
+                            this.playerBoard,
+                            cpuBoard,
+                            this.displayPlayerBoard
+                        );
                     }
                 });
             }
