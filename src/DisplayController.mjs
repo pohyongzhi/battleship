@@ -51,6 +51,8 @@ export class DisplayController {
     displayCpuBoard(cpuBoard) {
         const cpuBoardContent = document.querySelector(".cpu-board-content");
 
+        cpuBoardContent.innerHTML = "";
+
         for (let x = 0; x < 10; x++) {
             const tempRow = document.createElement("div");
             tempRow.className = "row";
@@ -78,9 +80,14 @@ export class DisplayController {
                             tempCol.style.backgroundColor = "#2c7da0";
                         }
 
+                        const endingScreen =
+                            document.querySelector(".ending-screen");
+                        const endingScreenMsg =
+                            document.querySelector(".ending-screen-msg");
                         // Check player win condition
                         if (cpuBoard.isAllShipsSunk()) {
-                            console.log("you win");
+                            endingScreen.style.display = "flex";
+                            endingScreenMsg.innerHTML = "YOU WON!";
                         }
 
                         // Randomize attacks
@@ -91,7 +98,8 @@ export class DisplayController {
 
                         // Check cpu win condition
                         if (playerBoard.isAllShipsSunk()) {
-                            console.log("You lose");
+                            endingScreen.style.display = "flex";
+                            endingScreenMsg.innerHTML = "YOU LOSE!";
                         }
                     }
 

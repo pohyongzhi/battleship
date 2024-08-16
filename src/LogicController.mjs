@@ -1,3 +1,7 @@
+import { Gameboard } from "./Gameboard.mjs";
+import { Player } from "./Player.mjs";
+import { DisplayController } from "./DisplayController.mjs";
+
 export function isHit(cpuBoard, position) {
     for (let i = 0; i < cpuBoard.shipCoords.length; i++) {
         if (cpuBoard.shipCoords[i].includes(position)) {
@@ -36,4 +40,49 @@ export function cpuAttack(playerBoard) {
 
     // Call attack
     playerBoard.receiveAttack(tempXY);
+}
+
+export function buttonEventListeners() {
+    let player = new Player(new Gameboard());
+    let cpu = new Player(new Gameboard());
+    let displayController = new DisplayController(
+        player.gameboard,
+        cpu.gameboard
+    );
+
+    // Starting screen overlay
+    const startingScreen = document.querySelector(".starting-screen");
+
+    const startBtn = document.querySelector(".start-btn");
+    startBtn.addEventListener("click", () => {
+        startingScreen.style.display = "none";
+    });
+
+    const randomizeBtn = document.querySelector(".randomize-btn");
+    randomizeBtn.addEventListener("click", () => {
+        player = new Player(new Gameboard());
+        cpu = new Player(new Gameboard());
+        displayController = new DisplayController(
+            player.gameboard,
+            cpu.gameboard
+        );
+    });
+
+    // Winning Screen
+    const endingScreen = document.querySelector(".ending-screen");
+
+    const closeBtn = document.querySelector(".close-btn");
+    closeBtn.addEventListener("click", () => {
+        endingScreen.style.display = "none";
+
+        // At least reset once
+        player = new Player(new Gameboard());
+        cpu = new Player(new Gameboard());
+        displayController = new DisplayController(
+            player.gameboard,
+            cpu.gameboard
+        );
+
+        startingScreen.style.display = "flex";
+    });
 }
