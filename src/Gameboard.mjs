@@ -81,7 +81,7 @@ export class Gameboard {
         }
 
         // Add result to shipCoords
-        this.shipCoords.push(result);
+        result.forEach((coord) => this.shipCoords.push(coord));
 
         // Look through result and set the array to point to the ship
         const setShips = (shipPosArr) => {
