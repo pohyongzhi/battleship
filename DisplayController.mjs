@@ -65,58 +65,59 @@ export class DisplayController {
                 tempRow.appendChild(tempCol);
 
                 tempCol.addEventListener("click", () => {
-                    function executeAttack(
-                        playerBoard,
-                        cpuBoard,
-                        displayPlayerBoard
-                    ) {
-                        // Add to hit position
-                        cpuBoard.receiveAttack(position);
-
-                        // Check if hit
-                        if (isHit(cpuBoard, position)) {
-                            tempCol.style.backgroundColor = "#e63946";
-                        } else {
-                            tempCol.style.backgroundColor = "#2c7da0";
-                        }
-
-                        const endingScreen =
-                            document.querySelector(".ending-screen");
-                        const endingScreenMsg =
-                            document.querySelector(".ending-screen-msg");
-                        // Check player win condition
-                        if (cpuBoard.isAllShipsSunk()) {
-                            endingScreen.style.display = "flex";
-                            endingScreenMsg.innerHTML = "YOU WON!";
-                        }
-
-                        // Randomize attacks
-                        cpuAttack(playerBoard);
-
-                        // Re-display
-                        displayPlayerBoard(playerBoard);
-
-                        // Check cpu win condition
-                        if (playerBoard.isAllShipsSunk()) {
-                            endingScreen.style.display = "flex";
-                            endingScreenMsg.innerHTML = "YOU LOSE!";
-                        }
-                    }
-
                     const position = x + "," + y;
 
                     // Check if hitCoords already exists
                     if (!cpuBoard.hitCoords.includes(position)) {
-                        executeAttack(
-                            this.playerBoard,
-                            cpuBoard,
-                            this.displayPlayerBoard
-                        );
+                        this.executeAttack(position);
                     }
                 });
             }
 
             cpuBoardContent.appendChild(tempRow);
         }
+    }
+
+    executeAttack(position) {
+        // Add to hit position
+        this.cpuBoard.receiveAttack(position);
+        this.updateBoardDisplay(position);
+
+        console.log(this.cpuBoard.sunkShips);
+
+        // Check player win condition
+        if (this.cpuBoard.isAllShipsSunk()) {
+            this.displayEndScreen("YOU WON!");
+            return;
+        }
+
+        // Randomize attacks
+        cpuAttack(this.playerBoard);
+
+        // Re-display
+        this.displayPlayerBoard(this.playerBoard);
+
+        // Check cpu win condition
+        if (this.playerBoard.isAllShipsSunk()) {
+            this.displayEndScreen("YOU LOSE!");
+        }
+    }
+
+    updateBoardDisplay(position) {
+        const tempCol = document.getElementById(position);
+
+        if (isHit(this.cpuBoard, position)) {
+            tempCol.style.backgroundColor = "#e63946";
+        } else {
+            tempCol.style.backgroundColor = "#2c7da0";
+        }
+    }
+
+    displayEndScreen(msg) {
+        const endingScreen = document.querySelector(".ending-screen");
+        const endingScreenMsg = document.querySelector(".ending-screen-msg");
+
+        endingScreen.style.display = "flex";
+        endingScreenMsg.innerHTML = msg;
     }
 }
