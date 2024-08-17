@@ -83,8 +83,6 @@ export class DisplayController {
         this.cpuBoard.receiveAttack(position);
         this.updateBoardDisplay(position);
 
-        console.log(this.cpuBoard.sunkShips);
-
         // Check player win condition
         if (this.cpuBoard.isAllShipsSunk()) {
             this.displayEndScreen("YOU WON!");
